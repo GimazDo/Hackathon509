@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -16,5 +18,10 @@ public class LotServiceImpl implements LotService{
     public Lot add(Lot lot) {
         log.info("saving lot: {}",lot.toString());
         return lotRepository.save(lot);
+    }
+
+    @Override
+    public List<Lot> getAll() {
+        return lotRepository.findAll();
     }
 }

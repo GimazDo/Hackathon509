@@ -4,6 +4,10 @@ import com.gimaz.hackathon.entity.Lot;
 import com.gimaz.hackathon.repository.LotRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 public interface LotService {
-    public Lot add(Lot lot);
+    Lot add(Lot lot);
+
+    List<Lot> getAll();
 }

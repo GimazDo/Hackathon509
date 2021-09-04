@@ -35,6 +35,6 @@ public class ScheduledTasks {
 //    Опрос блокчейна на списание и отправка тех, у кого надо списать денег
        @Scheduled(fixedRate = 1000*60*60*24)
         public void checkContract() throws Exception {
-           rentContract.getContracts().send();
+           rentContract.getContracts().sendAsync().get();
         }
 }

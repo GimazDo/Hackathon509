@@ -2,6 +2,7 @@ package com.gimaz.hackathon.api;
 
 import com.gimaz.hackathon.dto.AuctionDto;
 import com.gimaz.hackathon.dto.AuctionUserDto;
+import com.gimaz.hackathon.entity.Auction;
 import com.gimaz.hackathon.entity.Lot;
 import com.gimaz.hackathon.entity.User;
 import com.gimaz.hackathon.services.AuctionService;
@@ -22,6 +23,7 @@ public class APIContractController {
     private final LotService lotService;
     private final AuctionService auctionService;
 
+
     @PostMapping("/addAuction")
     public @ResponseBody Map addAuction(@RequestBody AuctionDto auctionDto)
     {
@@ -34,17 +36,17 @@ public class APIContractController {
     @PostMapping("/getAllAuction")
     public @ResponseBody Map getAllAuction()
     {
-        Map<String,List<Lot>> lots = new HashMap<>();
-        lots.put("lots",lotService.getAll());
+        Map<String,List<Auction>> lots = new HashMap<>();
+
+        lots.put("lots",auctionService.getAllActiveAuctions());
         return lots;
     }
 
     @PostMapping("/addRate")
-    public @ResponseBody Map addNewUserAuction(@RequestBody AuctionUserDto auctionUserDto)
-    {
+    public @ResponseBody Map addNewUserAuction(@RequestBody AuctionUserDto auctionUserDto) {
         auctionService.addUser(auctionUserDto);
-        HashMap<String,String> res = new HashMap<>();
-        res.put("status","access");
+        HashMap<String, String> res = new HashMap<>();
+        res.put("status", "access");
         return res;
     }
 

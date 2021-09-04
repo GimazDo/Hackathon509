@@ -1,6 +1,7 @@
 package com.gimaz.hackathon.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Data
 public class Lot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

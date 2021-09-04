@@ -24,13 +24,15 @@ public class Auction {
     @Column(name = "end_auc")
     private  LocalDateTime endAuc;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
     private Double Price;
 
-    @ManyToMany
+    private boolean status;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "auction_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "auction_id"))
     private Collection<User> users;
 

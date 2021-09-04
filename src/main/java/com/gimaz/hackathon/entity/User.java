@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.naming.Name;
 import javax.persistence.*;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class User {
 
     @JsonProperty("username")
     @Column(name = "username", unique = true)
-
     private String username;
+
 
     @JsonProperty("password")
     @Column(name = "pass")
@@ -43,8 +44,12 @@ public class User {
     @Column(name = "organization_name")
     private String OrganizationName;
 
+    @Column(name = "address")
+    private String address;
 
 
+    @Column(name = "INN",unique = true)
+    public String inn;
 
     public User(String username, String password, String email, List<Role> roles) {
         this.username = username;

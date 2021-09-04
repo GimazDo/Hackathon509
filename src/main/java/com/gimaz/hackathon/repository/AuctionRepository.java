@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AuctionRepository extends JpaRepository<Auction,Long> {
-    List<Auction> findAuctionByEndAucLessThanAndStartAucGreaterThan(LocalDateTime localDateTime);
+    List<Auction> findAuctionByEndAucLessThanAndStartAucGreaterThan(LocalDateTime localDateTime, LocalDateTime localDateTime1);
+    List<Auction> findAuctionByStatusEquals(boolean status);
 }

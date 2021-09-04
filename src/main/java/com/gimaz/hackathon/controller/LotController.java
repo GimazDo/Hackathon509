@@ -18,7 +18,7 @@ public class LotController {
     @GetMapping("/add")
     public String getAddPage(Model Model)
     {
-        return "AuctionAdd";
+        return "LotAdd";
     }
 
 
@@ -28,6 +28,6 @@ public class LotController {
     {
         Lot lot = new Lot(null,square,status);
         lotService.add(lot);
-        return "AuctionAdd";
+        return "LotAdd";
     };
 }

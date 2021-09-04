@@ -1,18 +1,20 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Создать новый аккаунт</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <title>Создать новый аккаунт</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5 mb-5">
-    <h1>Создание аккаунта</h1>
-    <form action="/lot/add" method="post">
-        <input type="number" name="square" placeholder="Введите площадь" class="form-control"><br>
-        <input type="checkbox" name="status" placeholder="Введите статус" class="form-control"><br>
-        <button type="submit" class="btn btn-success">Добавить лот</button><br>
-    </form>
+  <h1>Создание аккаунта</h1>
+  <form action="/auction/add" method="post">
+    <input type="number" name="lot_id" placeholder="Введите id лота" class="form-control"><br>
+    <input type="number" name="price" placeholder="Введите сумму" class="form-control"><br>
+    <input type="datetime-local" name="startAuc" placeholder="Введите время начала" class="form-control"><br>
+    <input type="datetime-local" name="endAuc" placeholder="Введите время конца" class="form-control"><br>
+    <button type="submit" class="btn btn-success">Добавить лот</button><br>
+  </form>
 </div>
 </body>
 </html>

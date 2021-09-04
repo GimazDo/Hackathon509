@@ -1,6 +1,7 @@
 package com.gimaz.hackathon.services;
 
 import com.gimaz.hackathon.dto.AuctionDto;
+import com.gimaz.hackathon.dto.AuctionFilterDto;
 import com.gimaz.hackathon.dto.AuctionUserDto;
 import com.gimaz.hackathon.entity.Auction;
 
@@ -12,5 +13,6 @@ public interface AuctionService {
     List<Auction> getAllActiveAuctions();
     List<Auction> getAll();
     Auction save(AuctionDto auctionDto);
+    List<Auction> findWithFilter(AuctionFilterDto auctionFilterDto);
 
 }

@@ -1,6 +1,7 @@
 package com.gimaz.hackathon.services;
 
 import com.gimaz.hackathon.dto.AuctionDto;
+import com.gimaz.hackathon.dto.AuctionFilterDto;
 import com.gimaz.hackathon.dto.AuctionUserDto;
 import com.gimaz.hackathon.entity.Auction;
 import com.gimaz.hackathon.entity.User;
@@ -38,7 +39,7 @@ public class AuctionServiceImpl implements AuctionService{
     public List<Auction> getAllActiveAuctions() {
         LocalDateTime localDateTime = LocalDateTime.now();
         log.info("IN AuctionService.getAllActiveAuctions -> Return all active auctions from DB");
-        return auctionRepository.findAuctionByEndAucLessThanAndStartAucGreaterThan(localDateTime);
+        return auctionRepository.findAuctionByEndAucLessThanAndStartAucGreaterThan(localDateTime,localDateTime);
     }
 
     @Override
@@ -52,7 +53,33 @@ public class AuctionServiceImpl implements AuctionService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy. HH:mm:ss");
         LocalDateTime startAuc = LocalDateTime.parse(auctionDto.getStartAuc(),formatter );
         LocalDateTime endAuc = LocalDateTime.parse(auctionDto.getEndAuc(),formatter);
-        Auction auction = new Auction(null,startAuc,endAuc,lotService.findById(auctionDto.getLotId()),auctionDto.getPrice(),null);
+        Auction auction = null;
+        if(LocalDateTime.now().isBefore(startAuc) && LocalDateTime.now().isBefore(endAuc))
+        {
+             auction = new Auction(null,
+                    startAuc,
+                    endAuc,
+                    lotService.findById(auctionDto.getLotId()),
+                    auctionDto.getPrice(),true,null);
+        }
+        else
+        {
+             auction = new Auction(null,
+                    startAuc,
+                    endAuc,
+                    lotService.findById(auctionDto.getLotId()),
+                    auctionDto.getPrice(),false,null);
+        }
         return auctionRepository.save(auction);
+    }
+
+    @Override
+    public List<Auction> findWithFilter(AuctionFilterDto auctionFilterDto) {
+        switch (auctionFilterDto.getType())
+        {
+            case "status":
+                return auctionRepository.findAuctionByStatusEquals(Boolean.valueOf(auctionFilterDto.getFilter()));
+        }
+        return null;
     }
 }

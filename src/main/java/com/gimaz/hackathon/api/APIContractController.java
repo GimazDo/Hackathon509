@@ -24,21 +24,14 @@ public class APIContractController {
     private final AuctionService auctionService;
 
 
-    @PostMapping("/addAuction")
-    public @ResponseBody Map addAuction(@RequestBody AuctionDto auctionDto)
-    {
-        auctionService.save(auctionDto);
-        HashMap<String,String> res = new HashMap<>();
-        res.put("status","access");
-        return res;
-    }
+
 
     @PostMapping("/getAllAuction")
     public @ResponseBody Map getAllAuction()
     {
         Map<String,List<Auction>> lots = new HashMap<>();
 
-        lots.put("lots",auctionService.getAllActiveAuctions());
+        lots.put("auctions",auctionService.getAll());
         return lots;
     }
 
@@ -49,5 +42,6 @@ public class APIContractController {
         res.put("status", "access");
         return res;
     }
+
 
 }

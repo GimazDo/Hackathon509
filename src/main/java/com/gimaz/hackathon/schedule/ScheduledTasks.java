@@ -33,8 +33,8 @@ public class ScheduledTasks {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 //    Опрос блокчейна на списание и отправка тех, у кого надо списать денег
-       @Scheduled(fixedRate = 1000*60*60*24)
-        public void checkContract() throws Exception {
-           rentContract.getContracts().sendAsync().get();
-        }
+//       @Scheduled(fixedRate = 1000*60*60*24)
+//        public void checkContract() throws Exception {
+//           rentContract.getContracts().sendAsync().get();
+//        }
 }

@@ -1,26 +1,37 @@
 package com.gimaz.hackathon.entity;
 
-import jnr.posix.LibC;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
+
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Auction {
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "start_auc")
     private LocalDateTime startAuc;
 
+    @Column(name = "end_auc")
     private  LocalDateTime endAuc;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lot_id")
     private Lot lot;
 
-    private Long startPrice;
+    private Double Price;
 
-    private Long lastPrice;
+    @ManyToMany
+    @JoinTable(name = "auction_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "auction_id"))
+    private Collection<User> users;
+
 }

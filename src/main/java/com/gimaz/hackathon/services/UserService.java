@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
+    User getUserByToken(String token);
     User register(User user);
 
     List<User> getAll();

@@ -1,8 +1,14 @@
 package com.gimaz.hackathon.blockchain;
 
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Callable;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
+import org.web3j.abi.datatypes.DynamicArray;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
@@ -14,12 +20,6 @@ import org.web3j.tuples.generated.Tuple8;
 import org.web3j.tx.Contract;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
-
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * <p>Auto generated code.
@@ -44,6 +44,8 @@ public class RentContract extends Contract {
 
     public static final String FUNC_EDITRENTCONTRACT = "editRentContract";
 
+    public static final String FUNC_GETCONTRACTS = "getContracts";
+
     public static final String FUNC_LANDLORD = "landlord";
 
     public static final String FUNC_OWNER = "owner";
@@ -57,8 +59,6 @@ public class RentContract extends Contract {
     public static final String FUNC_SIGNCONTRACT = "signContract";
 
     public static final String FUNC_TERMINATECONTRACT = "terminateContract";
-
-    public static final String FUNC_TODAY = "today";
 
     public static final String FUNC_WITHDRAW = "withdraw";
 
@@ -84,7 +84,7 @@ public class RentContract extends Contract {
 
     public RemoteFunctionCall<BigInteger> balances(String param0) {
         final Function function = new Function(FUNC_BALANCES, 
-                Arrays.<Type>asList(new Address(160, param0)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, param0)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
@@ -92,7 +92,7 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> createRentContract(rentInfo _info) {
         final Function function = new Function(
                 FUNC_CREATERENTCONTRACT, 
-                Arrays.<Type>asList((Type) _info),
+                Arrays.<Type>asList(_info), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -100,16 +100,15 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> deleteRentContract(BigInteger _contractId) {
         final Function function = new Function(
                 FUNC_DELETERENTCONTRACT, 
-                Arrays.<Type>asList(new Uint256(_contractId)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(_contractId)), 
                 Collections.<TypeReference<?>>emptyList());
-
         return executeRemoteCallTransaction(function);
     }
 
     public RemoteFunctionCall<TransactionReceipt> deposit(String _to) {
         final Function function = new Function(
                 FUNC_DEPOSIT, 
-                Arrays.<Type>asList(new Address(160, _to)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _to)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -117,10 +116,25 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> editRentContract(rentInfo _newInfo, BigInteger _contractId) {
         final Function function = new Function(
                 FUNC_EDITRENTCONTRACT, 
-                Arrays.<Type>asList((Type) _newInfo,
-                new Uint256(_contractId)),
+                Arrays.<Type>asList(_newInfo, 
+                new org.web3j.abi.datatypes.generated.Uint256(_contractId)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
+    }
+
+    public RemoteFunctionCall<List> getContracts() {
+        final Function function = new Function(FUNC_GETCONTRACTS, 
+                Arrays.<Type>asList(), 
+                Arrays.<TypeReference<?>>asList(new TypeReference<DynamicArray<rentInfo>>() {}));
+        return new RemoteFunctionCall<List>(function,
+                new Callable<List>() {
+                    @Override
+                    @SuppressWarnings("unchecked")
+                    public List call() throws Exception {
+                        List<Type> result = (List<Type>) executeCallSingleValueReturn(function, List.class);
+                        return convertToNative(result);
+                    }
+                });
     }
 
     public RemoteFunctionCall<String> landlord() {
@@ -140,14 +154,14 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> payOffOp(BigInteger _contractId) {
         final Function function = new Function(
                 FUNC_PAYOFFOP, 
-                Arrays.<Type>asList(new Uint256(_contractId)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(_contractId)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
     public RemoteFunctionCall<Tuple8<Boolean, String, Boolean, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger>> rentContracts(BigInteger param0) {
         final Function function = new Function(FUNC_RENTCONTRACTS, 
-                Arrays.<Type>asList(new Uint256(param0)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(param0)), 
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}, new TypeReference<Address>() {}, new TypeReference<Bool>() {}, new TypeReference<Uint256>() {}, new TypeReference<Uint256>() {}, new TypeReference<Uint256>() {}, new TypeReference<Uint256>() {}, new TypeReference<Uint256>() {}));
         return new RemoteFunctionCall<Tuple8<Boolean, String, Boolean, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger>>(function,
                 new Callable<Tuple8<Boolean, String, Boolean, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger>>() {
@@ -170,17 +184,18 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> setBalance(String _user, BigInteger _value) {
         final Function function = new Function(
                 FUNC_SETBALANCE, 
-                Arrays.<Type>asList(new Address(160, _user),
-                new Uint256(_value)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _user), 
+                new org.web3j.abi.datatypes.generated.Uint256(_value)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
-    public RemoteFunctionCall<TransactionReceipt> signContract(BigInteger _contractId, Boolean _payOpNow) {
+    public RemoteFunctionCall<TransactionReceipt> signContract(BigInteger _contractId, Boolean _payOpNow, BigInteger _today) {
         final Function function = new Function(
                 FUNC_SIGNCONTRACT, 
-                Arrays.<Type>asList(new Uint256(_contractId),
-                new Bool(_payOpNow)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(_contractId), 
+                new org.web3j.abi.datatypes.Bool(_payOpNow), 
+                new org.web3j.abi.datatypes.generated.Uint8(_today)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -188,23 +203,16 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> terminateContract(BigInteger _contractId) {
         final Function function = new Function(
                 FUNC_TERMINATECONTRACT, 
-                Arrays.<Type>asList(new Uint256(_contractId)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(_contractId)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
-    }
-
-    public RemoteFunctionCall<BigInteger> today() {
-        final Function function = new Function(FUNC_TODAY, 
-                Arrays.<Type>asList(), 
-                Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
-        return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteFunctionCall<TransactionReceipt> withdraw(String _to, BigInteger _amount) {
         final Function function = new Function(
                 FUNC_WITHDRAW, 
-                Arrays.<Type>asList(new Address(160, _to),
-                new Uint256(_amount)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(160, _to), 
+                new org.web3j.abi.datatypes.generated.Uint256(_amount)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -212,7 +220,7 @@ public class RentContract extends Contract {
     public RemoteFunctionCall<TransactionReceipt> writeOffRent(BigInteger _contractId) {
         final Function function = new Function(
                 FUNC_WRITEOFFRENT, 
-                Arrays.<Type>asList(new Uint256(_contractId)),
+                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(_contractId)), 
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -253,7 +261,7 @@ public class RentContract extends Contract {
         public BigInteger monthlyPrice;
 
         public rentInfo(Boolean isOccupied, String tenant, Boolean opPayed, BigInteger opDaysLeft, BigInteger opAmountLeft, BigInteger paymentDate, BigInteger area, BigInteger monthlyPrice) {
-            //super(new org.web3j.abi.datatypes.Bool(isOccupied),new org.web3j.abi.datatypes.Address(tenant),new org.web3j.abi.datatypes.Bool(opPayed),new org.web3j.abi.datatypes.generated.Uint256(opDaysLeft),new org.web3j.abi.datatypes.generated.Uint256(opAmountLeft),new org.web3j.abi.datatypes.generated.Uint256(paymentDate),new org.web3j.abi.datatypes.generated.Uint256(area),new org.web3j.abi.datatypes.generated.Uint256(monthlyPrice));
+            super(new org.web3j.abi.datatypes.Bool(isOccupied),new org.web3j.abi.datatypes.Address(tenant),new org.web3j.abi.datatypes.Bool(opPayed),new org.web3j.abi.datatypes.generated.Uint256(opDaysLeft),new org.web3j.abi.datatypes.generated.Uint256(opAmountLeft),new org.web3j.abi.datatypes.generated.Uint256(paymentDate),new org.web3j.abi.datatypes.generated.Uint256(area),new org.web3j.abi.datatypes.generated.Uint256(monthlyPrice));
             this.isOccupied = isOccupied;
             this.tenant = tenant;
             this.opPayed = opPayed;
@@ -265,7 +273,7 @@ public class RentContract extends Contract {
         }
 
         public rentInfo(Bool isOccupied, Address tenant, Bool opPayed, Uint256 opDaysLeft, Uint256 opAmountLeft, Uint256 paymentDate, Uint256 area, Uint256 monthlyPrice) {
-            //super(isOccupied,tenant,opPayed,opDaysLeft,opAmountLeft,paymentDate,area,monthlyPrice);
+            super(isOccupied,tenant,opPayed,opDaysLeft,opAmountLeft,paymentDate,area,monthlyPrice);
             this.isOccupied = isOccupied.getValue();
             this.tenant = tenant.getValue();
             this.opPayed = opPayed.getValue();

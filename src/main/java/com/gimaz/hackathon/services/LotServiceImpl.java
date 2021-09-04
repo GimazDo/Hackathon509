@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,12 @@ public class LotServiceImpl implements LotService{
     public Lot add(Lot lot) {
         log.info("saving lot: {}",lot.toString());
         return lotRepository.save(lot);
+    }
+
+    @Override
+    public Lot findById(Long id) {
+        Optional<Lot> lots = lotRepository.findById(id);
+        return lots.get();
     }
 
     @Override

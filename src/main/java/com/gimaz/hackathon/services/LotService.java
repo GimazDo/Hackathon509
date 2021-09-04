@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface LotService {
     Lot add(Lot lot);
-
+    Lot findById(Long id);
     List<Lot> getAll();
 }
